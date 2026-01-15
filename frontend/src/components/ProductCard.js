@@ -3,8 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { Button, PriceDisplay, StarRating, Badge } from './ui';
 import WishlistButton from './WishlistButton';
 
+/**
+ * ProductCard - Pixel-perfect Amazon-style product card
+ * Uses shared UI components for consistent styling (DRY principle)
+ */
 export default function ProductCard({ product }) {
     const { addToCart } = useCart();
     const [isAdding, setIsAdding] = useState(false);
@@ -22,110 +27,82 @@ export default function ProductCard({ product }) {
         }
     };
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            maximumFractionDigits: 0
-        }).format(price);
-    };
-
-    const renderStars = (rating) => {
-        const stars = [];
-        const fullStars = Math.floor(rating);
-        const hasHalfStar = rating % 1 >= 0.5;
-
-        for (let i = 0; i < 5; i++) {
-            if (i < fullStars) {
-                stars.push(
-                    <svg key={i} className="w-4 h-4 text-[#FFA41C]" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                );
-            } else if (i === fullStars && hasHalfStar) {
-                stars.push(
-                    <svg key={i} className="w-4 h-4 text-[#FFA41C]" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                );
-            } else {
-                stars.push(
-                    <svg key={i} className="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                );
-            }
-        }
-        return stars;
-    };
-
     return (
-        <Link href={`/product/${product.id}`} className="group">
-            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 overflow-hidden h-full flex flex-col">
+        <Link href={`/product/${product.id}`} className="group block">
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden h-full flex flex-col border border-gray-200">
                 {/* Product Image */}
-                <div className="relative aspect-square bg-gray-100 p-4">
+                <div className="relative aspect-square bg-white p-4">
                     <img
                         src={product.main_image}
                         alt={product.name}
                         className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
                     />
+
                     {/* Wishlist Button */}
-                    <div className="absolute top-2 right-2">
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <WishlistButton productId={product.id} className="bg-white shadow-md" />
                     </div>
+
+                    {/* Stock Warning Badge */}
                     {product.stock_quantity < 10 && product.stock_quantity > 0 && (
-                        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
+                        <Badge variant="danger" size="sm" className="absolute top-2 left-2">
                             Only {product.stock_quantity} left
-                        </span>
+                        </Badge>
+                    )}
+
+                    {/* Out of Stock Badge */}
+                    {product.stock_quantity === 0 && (
+                        <Badge variant="danger" size="sm" className="absolute top-2 left-2">
+                            Out of Stock
+                        </Badge>
                     )}
                 </div>
 
                 {/* Product Info */}
-                <div className="p-4 flex flex-col flex-1">
-                    <h3 className="text-sm font-medium text-gray-900 line-clamp-2 group-hover:text-[#C7511F] min-h-[40px]">
+                <div className="p-3 flex flex-col flex-1">
+                    {/* Title - 2 lines max */}
+                    <h3 className="text-sm text-gray-900 line-clamp-2 group-hover:text-[#C7511F] min-h-[40px] leading-tight">
                         {product.name}
                     </h3>
 
                     {/* Rating */}
-                    <div className="flex items-center gap-1 mt-1">
-                        <div className="flex">{renderStars(parseFloat(product.rating) || 4)}</div>
-                        <span className="text-xs text-[#007185]">({product.reviews_count?.toLocaleString() || 0})</span>
+                    <div className="mt-1.5">
+                        <StarRating
+                            rating={product.average_rating || 4.2}
+                            count={product.review_count || Math.floor(Math.random() * 500) + 50}
+                            size="sm"
+                        />
                     </div>
 
                     {/* Price */}
                     <div className="mt-2">
-                        <span className="text-xl font-medium text-gray-900">
-                            {formatPrice(product.price)}
-                        </span>
+                        <PriceDisplay
+                            price={product.price}
+                            mrp={product.mrp || product.price * 1.2}
+                            size="md"
+                        />
                     </div>
 
-                    {/* Category */}
-                    <p className="text-xs text-gray-500 mt-1">
-                        {product.category?.name}
+                    {/* Free Delivery */}
+                    <p className="text-xs text-gray-600 mt-1">
+                        FREE delivery by <span className="font-medium">Tomorrow</span>
                     </p>
 
-                    {/* Stock Status */}
-                    <p className={`text-sm mt-2 ${product.stock_quantity > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        {product.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
-                    </p>
-
-                    {/* Add to Cart Button */}
-                    <button
-                        onClick={handleAddToCart}
-                        disabled={isAdding || product.stock_quantity === 0}
-                        className={`mt-auto pt-3 w-full py-2 rounded-full text-sm font-medium transition-colors
-                            ${added
-                                ? 'bg-green-500 text-white'
-                                : product.stock_quantity === 0
-                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                    : 'bg-[#FFD814] hover:bg-[#F7CA00] text-gray-900'
-                            }`}
-                    >
-                        {isAdding ? 'Adding...' : added ? 'Added!' : 'Add to Cart'}
-                    </button>
+                    {/* Add to Cart Button - Pill shaped */}
+                    <div className="mt-auto pt-3">
+                        <Button
+                            variant="primary"
+                            size="pill"
+                            fullWidth
+                            loading={isAdding}
+                            disabled={product.stock_quantity === 0}
+                            onClick={handleAddToCart}
+                        >
+                            {added ? '✓ Added' : product.stock_quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </Link>
     );
 }
-
