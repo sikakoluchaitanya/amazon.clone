@@ -5,6 +5,7 @@ const ProductImage = require('./ProductImage');
 const CartItem = require('./CartItem');
 const Order = require('./Order');
 const OrderItem = require('./OrderItem');
+const WishlistItem = require('./WishlistItem');
 
 // Category - Product relationship (One-to-Many)
 Category.hasMany(Product, { foreignKey: 'category_id', as: 'products' });
@@ -34,6 +35,14 @@ OrderItem.belongsTo(Order, { foreignKey: 'order_id', as: 'order' });
 Product.hasMany(OrderItem, { foreignKey: 'product_id', as: 'orderItems' });
 OrderItem.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 
+// User - WishlistItem relationship (One-to-Many)
+User.hasMany(WishlistItem, { foreignKey: 'user_id', as: 'wishlistItems' });
+WishlistItem.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+// Product - WishlistItem relationship (One-to-Many)
+Product.hasMany(WishlistItem, { foreignKey: 'product_id', as: 'wishlistItems' });
+WishlistItem.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
+
 module.exports = {
     User,
     Category,
@@ -41,5 +50,6 @@ module.exports = {
     ProductImage,
     CartItem,
     Order,
-    OrderItem
+    OrderItem,
+    WishlistItem
 };

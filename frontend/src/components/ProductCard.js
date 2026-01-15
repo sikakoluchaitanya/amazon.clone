@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import WishlistButton from './WishlistButton';
 
 export default function ProductCard({ product }) {
     const { addToCart } = useCart();
@@ -68,6 +69,10 @@ export default function ProductCard({ product }) {
                         alt={product.name}
                         className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
                     />
+                    {/* Wishlist Button */}
+                    <div className="absolute top-2 right-2">
+                        <WishlistButton productId={product.id} className="bg-white shadow-md" />
+                    </div>
                     {product.stock_quantity < 10 && product.stock_quantity > 0 && (
                         <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
                             Only {product.stock_quantity} left

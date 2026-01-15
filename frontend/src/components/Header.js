@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 
 export default function Header() {
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
     const { cart } = useCart();
+    const { wishlist } = useWishlist();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -74,6 +76,20 @@ export default function Header() {
                 <Link href="/orders" className="hidden md:flex flex-col text-xs hover:border hover:border-white p-1 rounded">
                     <span className="text-gray-300">Returns</span>
                     <span className="font-bold">& Orders</span>
+                </Link>
+
+                {/* Wishlist */}
+                <Link href="/wishlist" className="hidden md:flex items-center hover:border hover:border-white p-1 rounded relative">
+                    <div className="relative">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        {wishlist.count > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                {wishlist.count}
+                            </span>
+                        )}
+                    </div>
                 </Link>
 
                 {/* Cart */}

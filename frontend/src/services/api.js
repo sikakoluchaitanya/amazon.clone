@@ -59,3 +59,18 @@ export const ordersAPI = {
     getAll: () => fetchAPI('/orders'),
     getById: (id) => fetchAPI(`/orders/${id}`),
 };
+
+// Wishlist API
+export const wishlistAPI = {
+    get: () => fetchAPI('/wishlist'),
+    add: (productId) => fetchAPI('/wishlist', {
+        method: 'POST',
+        body: JSON.stringify({ productId }),
+    }),
+    remove: (productId) => fetchAPI(`/wishlist/${productId}`, { method: 'DELETE' }),
+    check: (productId) => fetchAPI(`/wishlist/check/${productId}`),
+    toggle: (productId) => fetchAPI('/wishlist/toggle', {
+        method: 'POST',
+        body: JSON.stringify({ productId }),
+    }),
+};
