@@ -45,11 +45,23 @@ const seedDatabase = async () => {
         console.log(`Created ${productsData.length} products with images.`);
 
         console.log('Database seeding completed successfully!');
-        process.exit(0);
+        // Only exit if run directly
+        if (require.main === module) {
+            process.exit(0);
+        }
     } catch (error) {
         console.error('Error seeding database:', error);
-        process.exit(1);
+        if (require.main === module) {
+            process.exit(1);
+        } else {
+            throw error;
+        }
     }
 };
 
-seedDatabase();
+// Execute if run directly
+if (require.main === module) {
+    seedDatabase();
+}
+
+module.exports = seedDatabase;

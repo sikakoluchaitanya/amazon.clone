@@ -12,6 +12,7 @@ const wishlistRoutes = require('./routes/wishlistRoutes');
 
 // Import error handler
 const errorHandler = require('./middleware/errorHandler');
+const seedDatabase = require('./seeds/index');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -46,9 +47,9 @@ const startServer = async () => {
         await sequelize.authenticate();
         console.log('Database connection established successfully.');
 
-        // Sync models with database
-        await sequelize.sync({ alter: true });
-        console.log('Database models synchronized.');
+        // Seed database on startup (wipes data as requested)
+        await seedDatabase();
+        console.log('Database seeded successfully.');
 
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
