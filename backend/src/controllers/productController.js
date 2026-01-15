@@ -26,7 +26,8 @@ const getAllProducts = async (req, res, next) => {
             ],
             order: [['created_at', 'DESC']],
             limit: parseInt(limit),
-            offset: parseInt(offset)
+            offset: parseInt(offset),
+            distinct: true  // Fix: Prevent double-counting from image joins
         });
 
         res.json({
