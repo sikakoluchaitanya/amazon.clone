@@ -6,11 +6,30 @@ const productsData = require('./data/products');
 
 const seedDatabase = async () => {
     try {
-        console.log('Starting database seeding...');
+        console.log('Checking database status...');
 
-        // Sync database (recreate tables)
-        await sequelize.sync({ force: true });
-        console.log('Database tables created.');
+        // Check if data already exists
+        // We use alter: true to update schema if needed, instead of force: true which wipes it
+        await sequelize.sync({ alter: true });
+
+        const productCount = await Product.count();
+        if (productCount > 0) {
+            console.log('Database already initialized (Products found). Skipping seed.');
+            // Only exit if run directly
+            if (require.main === module) {
+                process.exit(0);
+            }
+            return;
+        }
+
+        console.log('Database is empty. Starting seeding...');
+
+        // Force sync only if we are seeding completely fresh
+        // await sequelize.sync({ force: true }); 
+        // Note: We already synced with alter: true above. 
+        // If we want to be safe for fresh seed, we can clear tables manually or just rely on empty DB.
+        // But original logic used force: true. 
+        // Let's stick to using data checks. If empty, just insert.
 
         // Create default user
         const defaultUser = await User.create({
