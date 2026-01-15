@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { Badge } from './ui';
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 
 /**
  * Header - Pixel-perfect Amazon-style header
@@ -17,6 +18,7 @@ export default function Header() {
     const router = useRouter();
     const { cart } = useCart();
     const { wishlist } = useWishlist();
+    const { user } = useUser();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -99,14 +101,29 @@ export default function Header() {
                     </form>
 
                     {/* Account - Hidden on small mobile */}
-                    <div className="hidden md:flex flex-col text-xs px-2 py-1.5 rounded cursor-pointer hover:outline hover:outline-1 hover:outline-white">
-                        <span className="text-gray-400 text-[11px]">Hello, User</span>
-                        <span className="font-bold text-sm flex items-center">
-                            Account & Lists
-                            <svg className="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </span>
+                    <div className="hidden md:flex flex-col justify-center px-2 py-1.5 rounded cursor-pointer hover:outline hover:outline-1 hover:outline-white">
+                        <SignedOut>
+                            <SignInButton mode="modal">
+                                <div>
+                                    <span className="text-gray-400 text-[11px] block leading-3">Hello, sign in</span>
+                                    <span className="font-bold text-sm flex items-center mt-0.5">
+                                        Account & Lists
+                                        <svg className="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </span>
+                                </div>
+                            </SignInButton>
+                        </SignedOut>
+                        <SignedIn>
+                            <div className="flex items-center gap-2">
+                                <div className="text-xs">
+                                    <span className="text-gray-400 block text-[11px] leading-3">Hello, {user?.firstName}</span>
+                                    <span className="font-bold text-sm">Account</span>
+                                </div>
+                                <UserButton afterSignOutUrl="/" />
+                            </div>
+                        </SignedIn>
                     </div>
 
                     {/* Orders */}
