@@ -22,6 +22,6 @@ module.exports = [
     {
         name: 'Sports & Outdoors',
         description: 'Sports equipment, outdoor gear, and fitness accessories',
-        image_url: 'https://images.unsplash.com/photo-1461896836934- voices-of-dissent?w=400'
+        image_url: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=400'
     }
 ];

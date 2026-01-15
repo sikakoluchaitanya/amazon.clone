@@ -242,7 +242,7 @@ module.exports = [
         price: 16999.00,
         stock_quantity: 40,
         category_id: 3,
-        main_image: 'https://images.unsplash.com/photo-1648455489916-44c1b3feefe9?w=500',
+        main_image: 'https://images.unsplash.com/photo-1695089028114-ce28248f0ab9?w=500',
         rating: 4.5,
         reviews_count: 2890,
         specifications: {
