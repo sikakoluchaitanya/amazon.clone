@@ -253,7 +253,7 @@ module.exports = [
             'Programs': '5 preset programs'
         },
         images: [
-            'https://images.unsplash.com/photo-1648455489916-44c1b3feefe9?w=500',
+            'https://images.unsplash.com/photo-1695089028114-ce28248f0ab9?q=80&w=987&auto=format&fit=crop',
             'https://images.unsplash.com/photo-1626229076202-03d5e4b4c46a?w=500'
         ]
     },
