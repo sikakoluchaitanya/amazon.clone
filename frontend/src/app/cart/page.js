@@ -28,7 +28,7 @@ export default function CartPage() {
     // Loading skeleton
     if (loading) {
         return (
-            <div className="bg-[#EAEDED] min-h-screen">
+            <div className="bg-amazon-bg min-h-screen">
                 <div className="max-w-[1500px] mx-auto px-4 py-6">
                     <div className="animate-pulse space-y-4">
                         <div className="h-10 bg-gray-200 rounded w-1/4" />
@@ -43,16 +43,16 @@ export default function CartPage() {
     }
 
     return (
-        <div className="bg-[#EAEDED] min-h-screen">
+        <div className="bg-amazon-bg min-h-screen text-amazon-text">
             <div className="max-w-[1500px] mx-auto px-4 py-6">
 
                 {cart.items.length === 0 ? (
                     // Empty Cart
-                    <div className="bg-white p-8 rounded-lg shadow-sm text-center">
+                    <div className="bg-amazon-white p-8 rounded-lg shadow-sm text-center">
                         <svg className="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <h2 className="text-2xl font-normal text-gray-900 mb-2">Your Amazon Clone Cart is empty</h2>
+                        <h2 className="text-2xl font-normal text-amazon-text mb-2">Your Amazon Clone Cart is empty</h2>
                         <p className="text-gray-600 mb-4">
                             Your shopping cart is waiting. Give it purpose — fill it with groceries, clothing, electronics, and more.
                         </p>
@@ -67,8 +67,8 @@ export default function CartPage() {
 
                         {/* Cart Items - Left Column */}
                         <div className="lg:col-span-3">
-                            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-                                <h1 className="text-2xl sm:text-3xl font-normal text-gray-900 pb-4 border-b">
+                            <div className="bg-amazon-white rounded-lg shadow-sm p-4 sm:p-6">
+                                <h1 className="text-2xl sm:text-3xl font-normal text-amazon-text pb-4 border-b">
                                     Shopping Cart
                                 </h1>
 
@@ -93,13 +93,13 @@ export default function CartPage() {
                                             {/* Product Details */}
                                             <div className="flex-1 min-w-0">
                                                 <Link href={`/product/${item.product.id}`}>
-                                                    <h3 className="text-base sm:text-lg font-normal text-[#0F1111] hover:text-[#C7511F] line-clamp-2">
+                                                    <h3 className="text-base sm:text-lg font-normal text-amazon-text hover:text-amazon-link-hover line-clamp-2">
                                                         {item.product.name}
                                                     </h3>
                                                 </Link>
 
                                                 {/* Stock Status */}
-                                                <p className={`text-xs mt-1 ${item.product.stock_quantity > 0 ? 'text-green-700' : 'text-red-600'}`}>
+                                                <p className={`text-xs mt-1 ${item.product.stock_quantity > 0 ? 'text-amazon-green' : 'text-amazon-red'}`}>
                                                     {item.product.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
                                                 </p>
 
@@ -118,7 +118,7 @@ export default function CartPage() {
                                                                 : handleUpdateQuantity(item.id, item.quantity - 1)
                                                             }
                                                             disabled={updating === item.id}
-                                                            className="px-3 py-1.5 hover:bg-[#E3E6E6] disabled:opacity-50 transition-colors"
+                                                            className="px-3 py-1.5 hover:bg-[#E3E6E6] disabled:opacity-50 transition-colors text-black"
                                                         >
                                                             {item.quantity === 1 ? (
                                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,13 +126,13 @@ export default function CartPage() {
                                                                 </svg>
                                                             ) : '−'}
                                                         </button>
-                                                        <span className="px-4 py-1.5 border-x border-gray-300 bg-white min-w-[40px] text-center font-medium">
+                                                        <span className="px-4 py-1.5 border-x border-gray-300 bg-white min-w-[40px] text-center font-medium text-amazon-text">
                                                             {updating === item.id ? '...' : item.quantity}
                                                         </span>
                                                         <button
                                                             onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                                                             disabled={updating === item.id || item.quantity >= item.product.stock_quantity}
-                                                            className="px-3 py-1.5 hover:bg-[#E3E6E6] disabled:opacity-50 transition-colors"
+                                                            className="px-3 py-1.5 hover:bg-[#E3E6E6] disabled:opacity-50 transition-colors text-black"
                                                         >
                                                             +
                                                         </button>
@@ -144,7 +144,7 @@ export default function CartPage() {
                                                     <button
                                                         onClick={() => handleRemove(item.id)}
                                                         disabled={updating === item.id}
-                                                        className="text-[#007185] hover:text-[#C7511F] hover:underline"
+                                                        className="text-amazon-link hover:text-amazon-link-hover hover:underline"
                                                     >
                                                         Delete
                                                     </button>
@@ -152,7 +152,7 @@ export default function CartPage() {
                                                     <span className="text-gray-300">|</span>
 
                                                     {/* Save for later */}
-                                                    <button className="text-[#007185] hover:text-[#C7511F] hover:underline">
+                                                    <button className="text-amazon-link hover:text-amazon-link-hover hover:underline">
                                                         Save for later
                                                     </button>
                                                 </div>
@@ -170,7 +170,7 @@ export default function CartPage() {
                                 ))}
 
                                 {/* Subtotal at bottom of cart */}
-                                <div className="pt-4 text-right text-lg">
+                                <div className="pt-4 text-right text-lg text-amazon-text">
                                     Subtotal ({cart.summary.itemCount} {cart.summary.itemCount === 1 ? 'item' : 'items'}):{' '}
                                     <span className="font-bold">
                                         <PriceDisplay price={cart.summary.subtotal} size="md" className="inline-flex" />
@@ -181,9 +181,9 @@ export default function CartPage() {
 
                         {/* Order Summary - Right Sidebar */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-lg shadow-sm p-4 lg:sticky lg:top-20">
+                            <div className="bg-amazon-white rounded-lg shadow-sm p-4 lg:sticky lg:top-20">
                                 {/* Free Delivery Notice */}
-                                <div className="text-sm text-green-700 mb-3 flex items-start gap-1">
+                                <div className="text-sm text-amazon-green mb-3 flex items-start gap-1">
                                     <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                     </svg>
@@ -191,7 +191,7 @@ export default function CartPage() {
                                 </div>
 
                                 {/* Subtotal */}
-                                <div className="text-base mb-4">
+                                <div className="text-base mb-4 text-amazon-text">
                                     Subtotal ({cart.summary.itemCount} {cart.summary.itemCount === 1 ? 'item' : 'items'}):{' '}
                                     <span className="font-bold">
                                         <PriceDisplay price={cart.summary.total} size="md" className="inline-flex" />

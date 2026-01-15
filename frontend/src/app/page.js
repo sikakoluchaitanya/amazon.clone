@@ -25,7 +25,7 @@ export default function Home() {
       setError(null);
       try {
         const [productsData, categoriesData] = await Promise.all([
-          productsAPI.getAll({ search, category: categoryId, page, limit: 12 }),
+          productsAPI.getAll({ search, category: categoryId, page, limit: 20 }),
           categoriesAPI.getAll()
         ]);
         setProducts(productsData.products);
@@ -107,17 +107,17 @@ export default function Home() {
         <div className="mb-6">
           {/* Title */}
           {search && (
-            <h1 className="text-xl font-medium text-gray-900">
+            <h1 className="text-xl font-medium text-amazon-text">
               Search results for "<span className="text-[#C7511F]">{search}</span>"
             </h1>
           )}
           {currentCategory && (
-            <h1 className="text-xl font-medium text-gray-900">
+            <h1 className="text-xl font-medium text-amazon-text">
               {currentCategory.name}
             </h1>
           )}
           {!search && !categoryId && (
-            <h2 className="text-xl font-bold text-gray-900">Featured Products</h2>
+            <h2 className="text-xl font-bold text-amazon-text">Featured Products</h2>
           )}
 
           {/* Result Count - Amazon style */}
@@ -216,8 +216,8 @@ export default function Home() {
                         href={buildPageUrl(pageNum)}
                         className={`w-10 h-10 flex items-center justify-center border text-sm font-medium transition-colors
                           ${page === pageNum
-                            ? 'border-[#007185] bg-white text-[#007185]'
-                            : 'border-gray-300 bg-white hover:bg-gray-50 text-gray-700'
+                            ? 'border-amazon-link bg-amazon-white text-amazon-link'
+                            : 'border-gray-300 bg-amazon-white hover:bg-gray-50 text-amazon-text'
                           }`}
                       >
                         {pageNum}

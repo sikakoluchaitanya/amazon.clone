@@ -38,7 +38,7 @@ export default function Header() {
     return (
         <header className="sticky top-0 z-50">
             {/* Main Header - Dark Blue */}
-            <div className="bg-[#131921] text-white">
+            <div className="bg-amazon-dark text-white">
                 <div className="flex items-center px-2 sm:px-4 py-2 gap-2 sm:gap-4 max-w-[1500px] mx-auto">
 
                     {/* Logo */}
@@ -153,7 +153,7 @@ export default function Header() {
             </div>
 
             {/* Sub Navigation - Lighter Blue */}
-            <div className="bg-[#232F3E] text-white">
+            <div className="bg-amazon-blue text-white">
                 <div className="flex items-center px-2 sm:px-4 py-1.5 gap-1 sm:gap-2 overflow-x-auto scrollbar-hide max-w-[1500px] mx-auto">
                     {/* All Menu */}
                     <button className="flex items-center gap-1 font-bold text-sm px-2 py-1 rounded hover:outline hover:outline-1 hover:outline-white whitespace-nowrap">

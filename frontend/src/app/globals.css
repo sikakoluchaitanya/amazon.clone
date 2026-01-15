@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
+@theme {
+    /* Amazon Brand Colors */
+    --color-amazon-bg: #EAEDED;
+    --color-amazon-white: #FFFFFF;
+    --color-amazon-black: #0F1111;
+    --color-amazon-blue: #232F3E;
+    --color-amazon-blue-light: #37475A;
+    --color-amazon-dark: #131921;
+
+    /* Action Colors */
+    --color-amazon-yellow: #FFD814;
+    --color-amazon-yellow-hover: #F7CA00;
+    --color-amazon-orange: #FFA41C;
+
+    /* Text Colors */
+    --color-amazon-link: #007185;
+    --color-amazon-link-hover: #C7511F;
+    --color-amazon-red: #B12704;
+    --color-amazon-green: #007600;
+    --color-amazon-text: #0F1111;
+    --color-amazon-text-secondary: #565959;
+}
+
+/* 
+  Force light mode to prevent system dark mode from breaking the Amazon design.
+  Amazon's design is inherently "light" for the main content.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--color-amazon-bg);
+    color: var(--color-amazon-text);
+    font-family: var(--font-geist-sans), Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility to force white background on containers */
+.amazon-card {
+    background-color: var(--color-amazon-white);
+    color: var(--color-amazon-text);
 }

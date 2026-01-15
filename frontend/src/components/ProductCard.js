@@ -29,9 +29,9 @@ export default function ProductCard({ product }) {
 
     return (
         <Link href={`/product/${product.id}`} className="group block">
-            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden h-full flex flex-col border border-gray-200">
+            <div className="bg-amazon-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden h-full flex flex-col border border-gray-200">
                 {/* Product Image */}
-                <div className="relative aspect-square bg-white p-4">
+                <div className="relative aspect-square bg-amazon-white p-4">
                     <img
                         src={product.main_image}
                         alt={product.name}
@@ -40,7 +40,7 @@ export default function ProductCard({ product }) {
 
                     {/* Wishlist Button */}
                     <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <WishlistButton productId={product.id} className="bg-white shadow-md" />
+                        <WishlistButton productId={product.id} className="bg-amazon-white shadow-md" />
                     </div>
 
                     {/* Stock Warning Badge */}
@@ -61,7 +61,7 @@ export default function ProductCard({ product }) {
                 {/* Product Info */}
                 <div className="p-3 flex flex-col flex-1">
                     {/* Title - 2 lines max */}
-                    <h3 className="text-sm text-gray-900 line-clamp-2 group-hover:text-[#C7511F] min-h-[40px] leading-tight">
+                    <h3 className="text-sm text-amazon-text line-clamp-2 group-hover:text-amazon-link-hover min-h-[40px] leading-tight">
                         {product.name}
                     </h3>
 
