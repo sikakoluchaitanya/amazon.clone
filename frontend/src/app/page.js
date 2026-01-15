@@ -25,7 +25,7 @@ export default function Home() {
       setError(null);
       try {
         const [productsData, categoriesData] = await Promise.all([
-          productsAPI.getAll({ search, category: categoryId, page, limit: 20 }),
+          productsAPI.getAll({ search, category: categoryId, page, limit: 15 }),
           categoriesAPI.getAll()
         ]);
         setProducts(productsData.products);

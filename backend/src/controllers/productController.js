@@ -4,7 +4,7 @@ const { Product, Category, ProductImage } = require('../models');
 // Get all products with filters and search
 const getAllProducts = async (req, res, next) => {
     try {
-        const { search, category, page = 1, limit = 12 } = req.query;
+        const { search, category, page = 1, limit = 15 } = req.query;
         const offset = (page - 1) * limit;
 
         // Build filter conditions
