@@ -49,7 +49,7 @@ module.exports = [
         price: 199900.00,
         stock_quantity: 20,
         category_id: 1,
-        main_image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=500',
+        main_image: 'https://images.unsplash.com/photo-1651241680016-cc9e407e7dc3?q=80&w=687&auto=format&fit=crop',
         rating: 4.9,
         reviews_count: 856,
         specifications: {
@@ -60,7 +60,7 @@ module.exports = [
             'Battery': 'Up to 17 hours'
         },
         images: [
-            'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=500',
+            'https://images.unsplash.com/photo-1651241680016-cc9e407e7dc3?q=80&w=687&auto=format&fit=crop',
             'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=500'
         ]
     },
@@ -254,7 +254,7 @@ module.exports = [
         },
         images: [
             'https://images.unsplash.com/photo-1695089028114-ce28248f0ab9?q=80&w=987&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1626229076202-03d5e4b4c46a?w=500'
+            'https://images.unsplash.com/photo-1674504866626-fe4f19f68564?w=500&auto=format&fit=crop&q=60'
         ]
     },
     {

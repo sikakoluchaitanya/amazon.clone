@@ -41,7 +41,7 @@ const generateOrderPlacementTemplate = (order) => {
 <body>
     <div class="container">
         <div class="header">
-            <a href="#" class="logo">amazon<span class="logo-dot">.clone</span></a>
+            <a href="http://localhost:3000" class="logo">amazon<span class="logo-dot">.clone</span></a>
         </div>
         <div class="content">
             <h2>Order Confirmation</h2>
@@ -65,7 +65,7 @@ const generateOrderPlacementTemplate = (order) => {
             </table>
 
             <div style="text-align: center;">
-                <a href="#" class="btn">View Order</a>
+                <a href="http://localhost:3000" class="btn">Visit the Amazon Clone Store</a>
             </div>
         </div>
         <div class="footer">
