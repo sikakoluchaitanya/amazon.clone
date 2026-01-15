@@ -11,7 +11,10 @@ const getAllProducts = async (req, res, next) => {
         const where = {};
 
         if (search) {
-            where.name = { [Op.iLike]: `%${search}%` };
+            where[Op.or] = [
+                { name: { [Op.iLike]: `%${search}%` } },
+                { description: { [Op.iLike]: `%${search}%` } }
+            ];
         }
 
         if (category) {

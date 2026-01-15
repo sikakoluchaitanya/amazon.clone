@@ -83,7 +83,7 @@ export default function Header() {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search Amazon.clone"
-                                className="flex-1 px-3 py-2.5 text-gray-900 text-base focus:outline-none min-w-0 sm:rounded-l-none rounded-l-md"
+                                className="flex-1 px-3 py-2.5 bg-amazon-white text-amazon-text text-base focus:outline-none min-w-0 sm:rounded-l-none rounded-l-md placeholder-gray-500"
                             />
 
                             {/* Search Button */}
