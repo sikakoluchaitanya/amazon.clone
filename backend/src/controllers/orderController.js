@@ -1,5 +1,6 @@
 const sequelize = require('../config');
 const { Order, OrderItem, CartItem, Product, ProductImage } = require('../models');
+const { sendOrderConfirmation } = require('../services/emailService');
 
 // Default user ID (for development)
 const DEFAULT_USER_ID = process.env.DEFAULT_USER_ID || 1;
@@ -79,6 +80,28 @@ const createOrder = async (req, res, next) => {
             orderId: order.id,
             totalAmount: order.total_amount
         });
+
+        // Send confirmation email asynchronously
+        const orderForEmail = {
+            id: order.id,
+            total_amount: totalAmount,
+            created_at: order.created_at,
+            details: {
+                items: cartItems.map(item => ({
+                    name: item.product.name,
+                    quantity: item.quantity,
+                    price: item.product.price
+                })),
+                shippingAddress: {
+                    name: shippingName,
+                    address: shippingAddress,
+                    city: shippingCity,
+                    pincode: shippingPincode
+                }
+            }
+        };
+
+        sendOrderConfirmation(orderForEmail).catch(err => console.error('Failed to send order confirmation email:', err));
     } catch (error) {
         await transaction.rollback();
         next(error);
