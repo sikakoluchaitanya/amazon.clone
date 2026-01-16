@@ -12,7 +12,7 @@ const wishlistRoutes = require('./routes/wishlistRoutes');
 
 // Import error handler
 const errorHandler = require('./middleware/errorHandler');
-const seedDatabase = require('./seeds/index');
+const seedDatabase = require('./seeds/dynamicProductSeeder');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
