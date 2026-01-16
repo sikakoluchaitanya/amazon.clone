@@ -17,8 +17,8 @@ export default function PriceDisplay({
         }).format(value);
     };
 
-    const discountPercent = mrp && mrp > price
-        ? Math.round(((mrp - price) / mrp) * 100)
+    const discountPercent = mrp && parseInt(mrp) > parseInt(price)
+        ? Math.round(((Number(mrp) - Number(price)) / Number(mrp)) * 100)
         : null;
 
     const sizes = {
@@ -30,12 +30,16 @@ export default function PriceDisplay({
 
     const sizeStyles = sizes[size] || sizes.md;
 
+    // Split price into whole and decimal parts for Amazon style
+    const [whole, fraction] = Number(price || 0).toFixed(2).split('.');
+
     return (
-        <div className={`flex flex-wrap items-baseline gap-2 ${className}`}>
+        <div className={`flex flex-wrap items-baseline gap-1 ${className}`}>
             {/* Current Price */}
-            <span className={`font-medium text-gray-900`}>
-                {showSymbol && <span className={`${sizeStyles.symbol} align-top`}>₹</span>}
-                <span className={`${sizeStyles.price} font-semibold`}>{formatPrice(price)}</span>
+            <span className={`flex items-start font-medium text-amazon-text`}>
+                {showSymbol && <span className={`${sizeStyles.symbol} relative top-[0.3em] font-normal`}>₹</span>}
+                <span className={`${sizeStyles.price} leading-none`}>{whole}</span>
+                <span className={`${sizeStyles.symbol} relative top-[0.3em] font-normal`}>{fraction}</span>
             </span>
 
             {/* MRP with strikethrough */}

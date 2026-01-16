@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { ordersAPI } from '@/services/api';
+import { Button } from '@/components/ui';
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -183,13 +184,16 @@ export default function CheckoutPage() {
                                 ))}
                             </div>
 
-                            <button
+                            <Button
                                 type="submit"
-                                disabled={submitting}
-                                className="w-full mt-6 bg-[#FFD814] hover:bg-[#F7CA00] py-3 rounded-full font-medium disabled:opacity-50"
+                                variant="secondary"
+                                fullWidth
+                                size="lg"
+                                loading={submitting}
+                                className="mt-6 rounded-full shadow-md"
                             >
                                 {submitting ? 'Placing Order...' : 'Place Order'}
-                            </button>
+                            </Button>
                         </form>
                     </div>
                 </div>

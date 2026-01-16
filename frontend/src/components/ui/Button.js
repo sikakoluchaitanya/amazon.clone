@@ -18,10 +18,10 @@ export default function Button({
     const baseStyles = 'font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1';
 
     const variants = {
-        primary: 'bg-[#FFD814] hover:bg-[#F7CA00] active:bg-[#F0C14B] text-gray-900 border border-[#FCD200] focus:ring-[#F7CA00] shadow-sm',
-        secondary: 'bg-[#FFA41C] hover:bg-[#FF8F00] active:bg-[#E77600] text-white border border-[#FF8F00] focus:ring-[#FFA41C]',
-        outline: 'bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 focus:ring-gray-300',
-        link: 'bg-transparent hover:underline text-[#007185] p-0 border-none shadow-none',
+        primary: 'amazon-button-primary border-amber-500 shadow-sm active:border-amber-600',
+        secondary: 'amazon-button-secondary border-amber-600 shadow-sm active:border-amber-700',
+        outline: 'bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 focus:ring-gray-300 shadow-sm',
+        link: 'bg-transparent hover:underline text-amazon-link hover:text-amazon-link-hover p-0 border-none shadow-none',
         danger: 'bg-red-600 hover:bg-red-700 text-white border border-red-600 focus:ring-red-500',
     };
 

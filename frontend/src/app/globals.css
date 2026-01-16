@@ -13,6 +13,9 @@
     --color-amazon-yellow: #FFD814;
     --color-amazon-yellow-hover: #F7CA00;
     --color-amazon-orange: #FFA41C;
+    --color-amazon-orange-hover: #FA8900;
+    --color-amazon-search-bg: #FEBD69;
+    --color-amazon-search-bg-hover: #F3A847;
 
     /* Text Colors */
     --color-amazon-link: #007185;
@@ -21,6 +24,7 @@
     --color-amazon-green: #007600;
     --color-amazon-text: #0F1111;
     --color-amazon-text-secondary: #565959;
+    --color-amazon-price: #B12704;
 }
 
 /* 
@@ -34,9 +38,32 @@
 body {
     background-color: var(--color-amazon-bg);
     color: var(--color-amazon-text);
-    font-family: var(--font-geist-sans), Arial, sans-serif;
+    font-family: var(--font-geist-sans), "Amazon Ember", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Amazon specific utility classes */
+.amazon-button-primary {
+    background: linear-gradient(to bottom, #FFD814, #F7CA00);
+    border-color: #FCD200;
+    color: #0F1111;
+}
+
+.amazon-button-primary:hover {
+    background: linear-gradient(to bottom, #F7CA00, #F7CA00);
+    border-color: #F2C200;
+}
+
+.amazon-button-secondary {
+    background: linear-gradient(to bottom, #FFA41C, #FF8F00);
+    border-color: #FF8F00;
+    color: #0F1111;
+}
+
+.amazon-button-secondary:hover {
+    background: linear-gradient(to bottom, #FA8900, #FA8900);
+    border-color: #E37B00;
 }
 
 /* Utility to force white background on containers */

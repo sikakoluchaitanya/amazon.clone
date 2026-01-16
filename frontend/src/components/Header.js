@@ -66,13 +66,14 @@ export default function Header() {
                     </div>
 
                     {/* Search Bar */}
+                    {/* Search Bar */}
                     <form onSubmit={handleSearch} className="flex-1 flex min-w-0">
-                        <div className="flex w-full rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-[#FEBD69]">
+                        <div className="flex w-full rounded-[4px] overflow-hidden focus-within:ring-3 focus-within:ring-[#F3A847]/50">
                             {/* Category Dropdown */}
                             <select
                                 value={selectedCategory}
                                 onChange={(e) => setSelectedCategory(e.target.value)}
-                                className="hidden sm:block bg-[#E6E6E6] hover:bg-[#D4D4D4] text-gray-700 text-sm px-2.5 py-2.5 border-r border-gray-300 focus:outline-none cursor-pointer rounded-l-md"
+                                className="hidden sm:block bg-[#F3F3F3] hover:bg-[#DADADA] text-gray-600 text-xs border-r border-gray-300 focus:outline-none cursor-pointer rounded-l-[4px] h-[40px] px-2"
                             >
                                 {categories.map(cat => (
                                     <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -85,15 +86,15 @@ export default function Header() {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search Amazon.clone"
-                                className="flex-1 px-3 py-2.5 bg-amazon-white text-amazon-text text-base focus:outline-none min-w-0 sm:rounded-l-none rounded-l-md placeholder-gray-500"
+                                className="flex-1 px-3 py-2 bg-white text-amazon-text text-[15px] focus:outline-none min-w-0 h-[40px] placeholder-gray-500"
                             />
 
                             {/* Search Button */}
                             <button
                                 type="submit"
-                                className="bg-[#FEBD69] hover:bg-[#F3A847] px-3 sm:px-4 py-2.5 rounded-r-md flex items-center justify-center"
+                                className="bg-[#FEBD69] hover:bg-[#F3A847] w-[45px] flex items-center justify-center rounded-r-[4px] h-[40px]"
                             >
-                                <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-6 h-6 text-[#1F1F1F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </button>
