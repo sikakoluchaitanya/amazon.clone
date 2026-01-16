@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
+import { categoriesAPI } from '@/services/api';
 import { Badge } from './ui';
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 
@@ -15,10 +16,24 @@ import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/n
 export default function Header() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
+    const [categories, setCategories] = useState([]);
     const router = useRouter();
     const { cart } = useCart();
     const { wishlist } = useWishlist();
     const { user } = useUser();
+
+    // Fetch categories from API on mount
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const data = await categoriesAPI.getAll();
+                setCategories(data);
+            } catch (err) {
+                console.error('Failed to fetch categories:', err);
+            }
+        };
+        fetchCategories();
+    }, []);
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -27,15 +42,6 @@ export default function Header() {
         if (selectedCategory !== 'all') params.set('category', selectedCategory);
         router.push(`/?${params.toString()}`);
     };
-
-    const categories = [
-        { id: 'all', name: 'All' },
-        { id: '1', name: 'Electronics' },
-        { id: '2', name: 'Clothing' },
-        { id: '3', name: 'Home & Kitchen' },
-        { id: '4', name: 'Books' },
-        { id: '5', name: 'Sports' },
-    ];
 
     return (
         <header className="sticky top-0 z-50">
@@ -75,6 +81,7 @@ export default function Header() {
                                 onChange={(e) => setSelectedCategory(e.target.value)}
                                 className="hidden sm:block bg-[#F3F3F3] hover:bg-[#DADADA] text-gray-600 text-xs border-r border-gray-300 focus:outline-none cursor-pointer rounded-l-[4px] h-[40px] px-2"
                             >
+                                <option value="all">All Categories</option>
                                 {categories.map(cat => (
                                     <option key={cat.id} value={cat.id}>{cat.name}</option>
                                 ))}
@@ -182,7 +189,7 @@ export default function Header() {
                     </button>
 
                     {/* Category Links */}
-                    {categories.slice(1).map(cat => (
+                    {categories.map(cat => (
                         <Link
                             key={cat.id}
                             href={`/?category=${cat.id}`}
