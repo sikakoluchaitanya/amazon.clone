@@ -11,10 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Health Endpoint
+        env:
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
         run: |
           echo "Pinging backend health endpoint..."
-          response=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BACKEND_URL }}/api/health)
+          
+          # Check if BACKEND_URL is set
+          if [ -z "$BACKEND_URL" ]; then
+            echo "❌ ERROR: BACKEND_URL secret is not set!"
+            echo "Please add BACKEND_URL in GitHub Settings > Secrets > Actions"
+            exit 1
+          fi
+          
+          echo "Target: $BACKEND_URL/api/health"
+          response=$(curl -s -o /dev/null -w "%{http_code}" --max-time 60 "$BACKEND_URL/api/health")
           echo "Response code: $response"
+          
           if [ "$response" = "200" ]; then
             echo "✅ Backend is alive!"
           else
