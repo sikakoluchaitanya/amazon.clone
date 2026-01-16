@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import HeroCarousel from '@/components/HeroCarousel';
@@ -9,7 +9,8 @@ import DealCard from '@/components/DealCard';
 import { productsAPI, categoriesAPI } from '@/services/api';
 import { Button } from '@/components/ui';
 
-export default function Home() {
+// Main content component that uses useSearchParams
+function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [products, setProducts] = useState([]);
@@ -337,5 +338,32 @@ export default function Home() {
         )}
       </div>
     </div>
+  );
+}
+
+// Loading fallback for Suspense
+function HomeLoading() {
+  return (
+    <div className="min-h-screen bg-[#EAEDED]">
+      <div className="max-w-[1500px] mx-auto px-4 py-6">
+        <div className="animate-pulse space-y-4">
+          <div className="h-64 bg-gray-200 rounded" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-48 bg-gray-200 rounded" />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Exported page component with Suspense boundary
+export default function Home() {
+  return (
+    <Suspense fallback={<HomeLoading />}>
+      <HomeContent />
+    </Suspense>
   );
 }

@@ -2,10 +2,11 @@
 
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { ordersAPI } from '@/services/api';
 
-export default function OrderConfirmationPage() {
+// Separate component that uses useSearchParams
+function OrderConfirmationContent() {
     const searchParams = useSearchParams();
     const orderId = searchParams.get('orderId');
     const [order, setOrder] = useState(null);
@@ -126,3 +127,25 @@ export default function OrderConfirmationPage() {
         </div>
     );
 }
+
+// Loading fallback for Suspense
+function OrderConfirmationLoading() {
+    return (
+        <div className="max-w-3xl mx-auto px-4 py-8">
+            <div className="animate-pulse space-y-4">
+                <div className="h-8 bg-gray-200 rounded w-1/2 mx-auto" />
+                <div className="h-32 bg-gray-200 rounded" />
+            </div>
+        </div>
+    );
+}
+
+// Main page component with Suspense boundary
+export default function OrderConfirmationPage() {
+    return (
+        <Suspense fallback={<OrderConfirmationLoading />}>
+            <OrderConfirmationContent />
+        </Suspense>
+    );
+}
+
