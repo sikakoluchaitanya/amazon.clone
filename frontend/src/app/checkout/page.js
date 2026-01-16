@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { ordersAPI } from '@/services/api';
 import { Button } from '@/components/ui';
+import { useUser, SignInButton } from '@clerk/nextjs';
 
 export default function CheckoutPage() {
     const router = useRouter();
+    const { isSignedIn, isLoaded, user } = useUser();
     const { cart, loading: cartLoading, refreshCart } = useCart();
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -36,11 +38,24 @@ export default function CheckoutPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Double-check user is signed in before placing order
+        if (!isSignedIn) {
+            setError('Please sign in to place your order');
+            return;
+        }
+
         setSubmitting(true);
         setError(null);
 
         try {
-            const result = await ordersAPI.create(formData);
+            // Include user email in the order request
+            const orderData = {
+                ...formData,
+                email: user.primaryEmailAddress?.emailAddress || user.emailAddresses?.[0]?.emailAddress
+            };
+
+            const result = await ordersAPI.create(orderData);
             await refreshCart();
             router.push(`/order-confirmation?orderId=${result.orderId}`);
         } catch (err) {
@@ -49,12 +64,38 @@ export default function CheckoutPage() {
         }
     };
 
-    if (cartLoading) {
+    // Loading state for auth
+    if (!isLoaded || cartLoading) {
         return (
             <div className="max-w-4xl mx-auto px-4 py-8">
                 <div className="animate-pulse space-y-4">
                     <div className="h-8 bg-gray-200 rounded w-1/4" />
                     <div className="h-64 bg-gray-200 rounded" />
+                </div>
+            </div>
+        );
+    }
+
+    // Sign-in required for checkout
+    if (!isSignedIn) {
+        return (
+            <div className="max-w-4xl mx-auto px-4 py-16 text-center">
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                    <svg className="w-16 h-16 mx-auto text-amazon-orange mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <h1 className="text-2xl font-bold mb-2">Sign in to checkout</h1>
+                    <p className="text-gray-600 mb-6">
+                        Please sign in to your account to place your order. We'll send order confirmation to your email.
+                    </p>
+                    <SignInButton mode="modal">
+                        <Button variant="secondary" size="lg" className="rounded-full px-8">
+                            Sign in to continue
+                        </Button>
+                    </SignInButton>
+                    <p className="text-sm text-gray-500 mt-4">
+                        Your cart items will be saved
+                    </p>
                 </div>
             </div>
         );
@@ -72,6 +113,19 @@ export default function CheckoutPage() {
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
             <h1 className="text-3xl font-medium mb-6">Checkout</h1>
+
+            {/* Signed in user info */}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center gap-3">
+                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <div>
+                    <p className="text-sm text-green-800">
+                        Signed in as <span className="font-medium">{user.primaryEmailAddress?.emailAddress}</span>
+                    </p>
+                    <p className="text-xs text-green-600">Order confirmation will be sent to this email</p>
+                </div>
+            </div>
 
             {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
@@ -226,3 +280,4 @@ export default function CheckoutPage() {
         </div>
     );
 }
+

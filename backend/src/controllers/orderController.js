@@ -10,7 +10,7 @@ const createOrder = async (req, res, next) => {
     const transaction = await sequelize.transaction();
 
     try {
-        const { shippingName, shippingAddress, shippingCity, shippingPincode, shippingPhone } = req.body;
+        const { shippingName, shippingAddress, shippingCity, shippingPincode, shippingPhone, email } = req.body;
 
         // Validate required fields
         if (!shippingName || !shippingAddress || !shippingCity || !shippingPincode || !shippingPhone) {
@@ -81,27 +81,32 @@ const createOrder = async (req, res, next) => {
             totalAmount: order.total_amount
         });
 
-        // Send confirmation email asynchronously
-        const orderForEmail = {
-            id: order.id,
-            total_amount: totalAmount,
-            created_at: order.created_at,
-            details: {
-                items: cartItems.map(item => ({
-                    name: item.product.name,
-                    quantity: item.quantity,
-                    price: item.product.price
-                })),
-                shippingAddress: {
-                    name: shippingName,
-                    address: shippingAddress,
-                    city: shippingCity,
-                    pincode: shippingPincode
+        // Send confirmation email asynchronously (if email provided from authenticated user)
+        if (email) {
+            const orderForEmail = {
+                id: order.id,
+                user_email: email, // Use email from authenticated user
+                total_amount: totalAmount,
+                created_at: order.created_at,
+                details: {
+                    items: cartItems.map(item => ({
+                        name: item.product.name,
+                        quantity: item.quantity,
+                        price: item.product.price
+                    })),
+                    shippingAddress: {
+                        name: shippingName,
+                        address: shippingAddress,
+                        city: shippingCity,
+                        pincode: shippingPincode
+                    }
                 }
-            }
-        };
+            };
 
-        sendOrderConfirmation(orderForEmail).catch(err => console.error('Failed to send order confirmation email:', err));
+            sendOrderConfirmation(orderForEmail).catch(err =>
+                console.error('Failed to send order confirmation email:', err)
+            );
+        }
     } catch (error) {
         await transaction.rollback();
         next(error);
