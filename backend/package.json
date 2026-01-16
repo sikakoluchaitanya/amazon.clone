@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "seed": "node src/seeds/index.js"
+    "seed": "node src/seeds/index.js",
+    "seed:dynamic": "node src/seeds/dynamicProductSeeder.js",
+    "seed:force": "node src/seeds/dynamicProductSeeder.js --force"
   },
   "dependencies": {
     "cors": "^2.8.5",
